@@ -39,21 +39,6 @@ const mainFunction = ({ addBase, addComponents, config }) => {
     file = unstyled
   }
 
-  // add prefix to class names if specified
-  const prefix = config("daisyui.prefix")
-  let postcssJsProcess
-  if (prefix) {
-    try {
-      postcssJsProcess = postcssJs.sync(postcssPrefix({ prefix, ignore: [] }))
-    } catch (error) {
-      logs && console.error(`Error occurred and prevent applying the "prefix" option:`, error)
-    }
-  }
-  const shouldApplyPrefix = prefix && postcssJsProcess
-  if (shouldApplyPrefix) {
-    file = postcssJsProcess(file)
-  }
-
   addComponents(file)
 
   const themeInjector = colorFunctions.injectThemes(addBase, config, themes)
